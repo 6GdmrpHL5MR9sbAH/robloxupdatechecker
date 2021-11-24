@@ -98,16 +98,17 @@ async function moderationSlashCommands(command, interaction, button) {
         }
         await interaction.editReply({ embeds: [embed] })
     } else if (command === "createrolemenu") {
-        const row = new Discord.MessageActionRow().addComponents(
-            new Discord.MessageButton()
-                .setCustomId("getUpdateRole")
-                .setLabel("Get Role")
-                .setStyle("SUCCESS"),
-            new Discord.MessageButton()
-                .setCustomId("removeUpdateRole")
-                .setLabel("Remove Role")
-                .setStyle("DANGER")
-        )
+        const row = new Discord.MessageActionRow()
+            .addComponents(
+                new Discord.MessageButton()
+                    .setCustomId("getUpdateRole")
+                    .setLabel("Get Role")
+                    .setStyle("SUCCESS"),
+                new Discord.MessageButton()
+                    .setCustomId("removeUpdateRole")
+                    .setLabel("Remove Role")
+                    .setStyle("DANGER")
+            )
         if (!interaction.member.permissions.has("ADMINISTRATOR") && interaction.user.id !== "848566795820072980") {
             const embed = new Discord.MessageEmbed()
                 .setColor("RED")
@@ -253,7 +254,6 @@ for (const file of fs.readdirSync("./events").filter(file => file.endsWith(".js"
     })
 }
 
-// On Bot Login
 client.on("ready", async _ => {
     console.log(`${client.user.tag} is online`.green)
     setInterval(_ => {
@@ -387,7 +387,6 @@ client.on("ready", async _ => {
     }, 15000)
 })
 
-// Slash Commands/Buttons
 client.on("interactionCreate", async interaction => {
     if (interaction.isCommand()) {
         if (interaction.commandName === "member" && interaction.options.data[0].name === "invite") memberSlashCommands("invite", interaction)
@@ -397,7 +396,6 @@ client.on("interactionCreate", async interaction => {
         if (interaction.commandName === "moderation" && interaction.options.data[0].name === "setupdaterole") moderationSlashCommands("setupdaterole", interaction)
         if (interaction.commandName === "moderation" && interaction.options.data[0].name === "createrolemenu") moderationSlashCommands("createrolemenu", interaction)
     } else if (interaction.isButton()) {
-        // Mention Role
         if (interaction.customId === "getUpdateRole") {
             if (!JSON.parse(fs.readFileSync("./data/guilds.json", "utf8"))[interaction.guild.id].updateRole || !interaction.guild.roles.cache.has(JSON.parse(fs.readFileSync("./data/guilds.json", "utf8"))[interaction.guild.id].updateRole)) {
                 const embed = new Discord.MessageEmbed()
