@@ -1,6 +1,6 @@
 # Setup
 
-Enter your Discord bot token into the token field in /data/config.json and then install the packages by using:
+Enter your Discord bot token into the token field in /config.json and then install the packages by using:
 ```
 npm i
 ```
