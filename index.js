@@ -224,9 +224,9 @@ async function getReleaseNotes(release, browser, page) {
     }
     const element = await page.$("body > div.main-container.generic-pages.sub-pages > div.container-fluid > div > main > div > div.page-elements > div:nth-child(2) > table")
     const box = await element.boundingBox()
-    await element.screenshot({ path: `./resources/releasenotes/${release}.png`, clip: { "x": box.x + 5, "y": box.y - 50, "width": box.width - 5, "height": box.height + 50 } })
+    await element.screenshot({ path: `./releasenotes/${release}.png`, clip: { "x": box.x + 5, "y": box.y - 50, "width": box.width - 5, "height": box.height + 50 } })
     await browser.close()
-    const file = new Discord.MessageAttachment(`./resources/releasenotes/${release}.png`)
+    const file = new Discord.MessageAttachment(`./releasenotes/${release}.png`)
     const embed = new Discord.MessageEmbed()
         .setColor("BLUE")
         .setTitle("Release Notes")
