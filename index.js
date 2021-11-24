@@ -1,4 +1,3 @@
-require("colors")
 const Discord = require("discord.js")
 const fs = require("fs")
 const wait = require("util").promisify(setTimeout)
@@ -263,7 +262,7 @@ for (const file of fs.readdirSync("./events").filter(file => file.endsWith(".js"
 
 // After the bot logs in.
 client.on("ready", async _ => {
-    console.log(`${client.user.tag} is online`.green)
+    console.log(`${client.user.tag} is online`)
     setInterval(_ => {
         isOnline().then(result => {
             if (result) {
