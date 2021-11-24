@@ -6,9 +6,6 @@ module.exports = {
         if (!channel.guild || channel.guild.id !== "836941787213725717") {
             return
         }
-        if (channel.parent && channel.parent.id === "885818705810964550") {
-            return
-        }
         let type = "Unknown"
         if (channel.type === "GUILD_TEXT") type = "Text Channel"
         else if (channel.type === "GUILD_VOICE") type = "Voice Channel"
