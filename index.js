@@ -1,7 +1,7 @@
 const Discord = require("discord.js")
 const fs = require("fs")
 const wait = require("util").promisify(setTimeout)
-const request = require("request")
+const fetch = require("node-fetch")
 const config = require("./data/config.json")
 const client = new Discord.Client({ intents: ["GUILDS", "GUILD_MEMBERS"] })
 let rickRolling = false
@@ -323,12 +323,14 @@ client.on("ready", async _ => {
     const config = JSON.parse(fs.readFileSync("./data/config.json", "utf8"))
     console.log(`${client.user.tag} is online`)
     setInterval(_ => {
-        try {
-            request("https://clientsettings.roblox.com/v2/client-version/WindowsPlayer", { json: true }, (error, response) => {
-                if (!response || !response.body || !response.body.clientVersionUpload || !response.body.version || error) return
-                if (response.body.clientVersionUpload) logVersion(response.body.clientVersionUpload, response.body.version.slice(2, -10))
+        fetch("https://clientsettings.roblox.com/v2/client-version/WindowsPlayer")
+            .then(response => response.json())
+            .then(response => {
+                if (response.clientVersionUpload) {
+                    logVersion(response.clientVersionUpload, response.version.slice(2, -10))
+                }
             })
-        } catch { }
+            .catch()
     }, 3000)
     deploySlashCommands()
     setInterval(async _ => {
