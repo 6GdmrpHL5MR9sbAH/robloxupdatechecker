@@ -1,3 +1,6 @@
+// Uncomment "deploySlashCommands()" when you need to deploy the slash commands \\
+// It's commented to avoid API spam and to avoid "Invalid interaction application command" \\
+
 const Discord = require("discord.js")
 const fs = require("fs")
 const wait = require("util").promisify(setTimeout)
@@ -23,70 +26,47 @@ async function writeJSON(jsonFileName, path, data, codeToRun) {
 async function deploySlashCommands() {
     const data = [
         {
-            name: "member",
-            description: "​",
+            name: "invite",
+            description: "Sends the invite link for the bot and the main server."
+        },
+        {
+            name: "setupdatechannel",
+            description: "Sets the update channel to the provided channel - Requires the ADMINISTRATOR permission.",
             options: [
                 {
-                    name: "invite",
-                    description: "Sends the invite link for the bot and the main server.",
-                    type: "SUB_COMMAND"
-                },
-                {
-                    name: "version",
-                    description: "Sends the current and previous version of Roblox.",
-                    type: "SUB_COMMAND"
-                },
-                {
-                    name: "versions",
-                    description: "Get a list of every version RUC has logged.",
-                    type: "SUB_COMMAND"
+                    name: "channel",
+                    description: "The update channel.",
+                    type: "CHANNEL",
+                    required: true
                 }
             ]
         },
         {
-            name: "moderation",
-            description: "​",
+            name: "setupdaterole",
+            description: "Sets the update mention role to the provided role - Requires the ADMINISTRATOR permission.",
             options: [
                 {
-                    name: "setupdatechannel",
-                    description: "Sets the update channel to the provided channel.",
-                    type: "SUB_COMMAND",
-                    options: [
-                        {
-                            name: "channel",
-                            description: "The update channel.",
-                            type: "CHANNEL",
-                            required: true
-                        }
-                    ]
-                },
-                {
-                    name: "setupdaterole",
-                    description: "Sets the update mention role to the provided role.",
-                    type: "SUB_COMMAND",
-                    options: [
-                        {
-                            name: "role",
-                            description: "The update role.",
-                            type: "ROLE",
-                            required: true
-                        }
-                    ]
-                },
-                {
-                    name: "createrolemenu",
-                    description: "Creates a role menu for the update role.",
-                    type: "SUB_COMMAND"
+                    name: "role",
+                    description: "The update role.",
+                    type: "ROLE",
+                    required: true
                 }
             ]
+        },
+        {
+            name: "createrolemenu",
+            description: "Creates a role menu for the update role - Requires the ADMINISTRATOR permission."
         }
     ]
     client.application.commands.set(data)
 }
 
-// Function for slash commands everyone can use.
-async function memberSlashCommands(command, interaction) {
-    const versionData = JSON.parse(fs.readFileSync("./data/versions.json", "utf8"))
+// Function for slash commands.
+async function slashCommands(command, interaction) {
+    const guildData = JSON.parse(fs.readFileSync("./data/guilds.json", "utf8"))
+    if (!guildData[interaction.guild.id]) {
+        await writeJSON("guilds", interaction.guild.id, {})
+    }
     if (command === "invite") {
         const embed = new Discord.MessageEmbed()
             .setColor("BLUE")
@@ -94,40 +74,7 @@ async function memberSlashCommands(command, interaction) {
 [Click to join the RUC server](https://discord.gg/wHy6kkvDQc)`)
         await interaction.deferReply({ ephemeral: true })
         await interaction.editReply({ embeds: [embed] })
-    } else if (command === "version") {
-        const embed = new Discord.MessageEmbed()
-            .setColor("BLUE")
-            .addFields(
-                {
-                    name: "Current Version",
-                    value: versionData.current
-                },
-                {
-                    name: "Previous Version",
-                    value: versionData.previous
-                }
-            )
-        await interaction.deferReply({ ephemeral: true })
-        await interaction.editReply({ embeds: [embed] })
-    } else if (command === "versions") {
-        const embed = new Discord.MessageEmbed()
-            .setColor("BLUE")
-            .setDescription(versionData.list.join("\n"))
-        await interaction.deferReply({ ephemeral: true })
-        await interaction.editReply({ embeds: [embed] })
-    }
-}
-
-// Function for slash commands admins can use.
-async function moderationSlashCommands(command, interaction, button) {
-    const guildData = JSON.parse(fs.readFileSync("./data/guilds.json", "utf8"))
-    if (button) {
-        interaction = button
-    }
-    if (!guildData[interaction.guild.id]) {
-        await writeJSON("guilds", interaction.guild.id, {})
-    }
-    if (command === "setupdatechannel") {
+    } else if (command === "setupdatechannel") {
         let embed
         if (!interaction.member.permissions.has("ADMINISTRATOR")) {
             embed = new Discord.MessageEmbed()
@@ -332,7 +279,7 @@ client.on("ready", async _ => {
             })
             .catch()
     }, 3000)
-    deploySlashCommands()
+    // deploySlashCommands()
     setInterval(async _ => {
         if (rickRolling) return
         if (generateNumber(1, 1000) === 1) {
@@ -366,12 +313,10 @@ client.on("ready", async _ => {
 client.on("interactionCreate", async interaction => {
     const guildData = JSON.parse(fs.readFileSync("./data/guilds.json", "utf8"))
     if (interaction.isCommand()) { // Slash Commands
-        if (interaction.commandName === "member" && interaction.options.data[0].name === "invite") memberSlashCommands("invite", interaction) // /member invite
-        if (interaction.commandName === "member" && interaction.options.data[0].name === "version") memberSlashCommands("version", interaction) // /member version
-        if (interaction.commandName === "member" && interaction.options.data[0].name === "versions") memberSlashCommands("versions", interaction) // /member versions
-        if (interaction.commandName === "moderation" && interaction.options.data[0].name === "setupdatechannel") moderationSlashCommands("setupdatechannel", interaction) // /moderation setupdatechannel
-        if (interaction.commandName === "moderation" && interaction.options.data[0].name === "setupdaterole") moderationSlashCommands("setupdaterole", interaction) // /moderation setupdaterole
-        if (interaction.commandName === "moderation" && interaction.options.data[0].name === "createrolemenu") moderationSlashCommands("createrolemenu", interaction) // /moderation createrolemenu
+        if (interaction.commandName === "invite") slashCommands("invite", interaction) // /invite
+        if (interaction.commandName === "setupdatechannel") slashCommands("setupdatechannel", interaction) // /setupdatechannel
+        if (interaction.commandName === "setupdaterole") slashCommands("setupdaterole", interaction) // /setupdaterole
+        if (interaction.commandName === "createrolemenu") slashCommands("createrolemenu", interaction) // /createrolemenu
     } else if (interaction.isButton()) { // Buttons
         if (interaction.customId === "getUpdateRole") { // Role Menu - Give Update Role
             if (!guildData[interaction.guild.id].updateRole || !interaction.guild.roles.cache.has(guildData[interaction.guild.id].updateRole)) {
