@@ -1,3 +1,4 @@
+// Sends Message to New Server \\
 const Discord = require("discord.js")
 
 module.exports = {

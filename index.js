@@ -8,10 +8,12 @@ const config = require("./data/config.json")
 const client = new Discord.Client({ intents: ["GUILDS", "GUILD_MEMBERS"] })
 let rickRolling = false
 
+// Generates a random number, used for the random rickroll status.
 async function generateNumber(min, max) {
     return parseInt(Math.random() * (max - min + 1) + min)
 }
 
+// Write to JSON file.
 async function writeJSON(jsonFileName, path, data, codeToRun) {
     const file = JSON.parse(fs.readFileSync(`./data/${jsonFileName}.json`, "utf8"))
     if (!codeToRun) codeToRun = "file[path] = data"
@@ -19,6 +21,7 @@ async function writeJSON(jsonFileName, path, data, codeToRun) {
     fs.writeFileSync(`./data/${jsonFileName}.json`, JSON.stringify(file, null, "\t"))
 }
 
+// Function for slash commands everyone can use.
 async function memberSlashCommands(command, interaction) {
     if (command === "invite") {
         const embed = new Discord.MessageEmbed()
@@ -51,6 +54,7 @@ async function memberSlashCommands(command, interaction) {
     }
 }
 
+// Function for slash commands admins can use.
 async function moderationSlashCommands(command, interaction, button) {
     if (button) {
         interaction = button
@@ -133,7 +137,8 @@ Click "Remove Role" to remove <@&${JSON.parse(fs.readFileSync("./data/guilds.jso
     }
 }
 
-async function checkForVersion(version, release, done) {
+// Logs new update.
+async function logVersion(version, release, done) {
     if (!done) {
         if (version === undefined || version === JSON.parse(fs.readFileSync("./data/versions.json", "utf8")).current) {
             return
@@ -207,6 +212,7 @@ async function checkForVersion(version, release, done) {
     getReleaseNotes(release)
 }
 
+// Gets the latest release notes.
 async function getReleaseNotes(release, browser, page) {
     if (!browser) {
         browser = await puppeteer.launch({
@@ -247,6 +253,7 @@ Sent <t:${parseInt((new Date().getTime() / 1000).toFixed(0))}:R>.`)
     })
 }
 
+// Runs events in the /events/ folder.
 for (const file of fs.readdirSync("./events").filter(file => file.endsWith(".js"))) {
     const event = require(`./events/${file}`)
     client.on(file.replace(".js", ""), (...args) => {
@@ -254,6 +261,7 @@ for (const file of fs.readdirSync("./events").filter(file => file.endsWith(".js"
     })
 }
 
+// After the bot logs in.
 client.on("ready", async _ => {
     console.log(`${client.user.tag} is online`.green)
     setInterval(_ => {
@@ -261,7 +269,7 @@ client.on("ready", async _ => {
             if (result) {
                 request("https://clientsettings.roblox.com/v2/client-version/WindowsPlayer", { json: true }, (error, response) => {
                     if (!response || !response.body || !response.body.clientVersionUpload || !response.body.version || error) return
-                    if (response.body.clientVersionUpload) checkForVersion(response.body.clientVersionUpload, response.body.version.slice(2, -10))
+                    if (response.body.clientVersionUpload) logVersion(response.body.clientVersionUpload, response.body.version.slice(2, -10))
                 })
             }
         })
@@ -387,6 +395,7 @@ client.on("ready", async _ => {
     }, 15000)
 })
 
+// Slash commands and buttons.
 client.on("interactionCreate", async interaction => {
     if (interaction.isCommand()) {
         if (interaction.commandName === "member" && interaction.options.data[0].name === "invite") memberSlashCommands("invite", interaction)
@@ -441,6 +450,8 @@ client.on("interactionCreate", async interaction => {
     }
 })
 
+// Log uncaught errors.
 process.on("uncaughtException", error => console.error(error))
 
+// Login
 client.login(config.token)

@@ -1,3 +1,4 @@
+// Log Message Deletions (Staff Server) \\
 const Discord = require("discord.js")
 
 module.exports = {

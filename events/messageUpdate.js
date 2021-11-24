@@ -1,4 +1,3 @@
-// Log Message Edits (Staff Server) \\
 const Discord = require("discord.js")
 
 module.exports = {

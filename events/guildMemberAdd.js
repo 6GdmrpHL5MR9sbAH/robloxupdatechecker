@@ -1,3 +1,4 @@
+// Log Joins \\
 module.exports = {
     async execute(client, member) {
         if (member.guild.id === "836941787213725717" && !member.user.bot) {
