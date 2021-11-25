@@ -30,3 +30,8 @@ If you've done everything correctly, it should look similar to this:
 ![image](https://user-images.githubusercontent.com/94950634/143378166-4abbbcea-f8c7-4fed-af89-6445fe517c68.png)
 
 Visit the generated URL and follow the instructions.
+
+# Intents
+
+Remember to enable the following intents:
+![image](https://user-images.githubusercontent.com/94950634/143380178-906730e1-6dcf-4d43-8178-dffca683a1a4.png)
