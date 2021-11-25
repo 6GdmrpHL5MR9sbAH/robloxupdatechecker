@@ -5,7 +5,7 @@ const Discord = require("discord.js")
 const fs = require("fs")
 const wait = require("util").promisify(setTimeout)
 const fetch = require("node-fetch")
-const config = require("./data/config.json")
+const config = require("./config.json")
 const client = new Discord.Client({ intents: ["GUILDS", "GUILD_MEMBERS"] })
 let rickRolling = false
 
@@ -267,7 +267,7 @@ for (const file of fs.readdirSync("./events").filter(file => file.endsWith(".js"
 
 // After the bot logs in.
 client.on("ready", async _ => {
-    const config = JSON.parse(fs.readFileSync("./data/config.json", "utf8"))
+    const config = JSON.parse(fs.readFileSync("./config.json", "utf8"))
     console.log(`${client.user.tag} is online`)
     setInterval(_ => {
         fetch("https://clientsettings.roblox.com/v2/client-version/WindowsPlayer")
