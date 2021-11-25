@@ -6,7 +6,7 @@ After you've created an application click on the **Bot** tab located to the left
 
 Copy the bots token by clicking the **Copy** button.
 
-Then, go to /data/config.json and replace `TOKEN GOES HERE` with the token you copied and then install the packages by using `npm i`.
+Go to /data/config.json then replace `TOKEN GOES HERE` with the token you copied then install the packages by using `npm i`.
 
 Start the bot by using `node index.js`.
 
