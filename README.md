@@ -26,7 +26,7 @@ Click on the **URL Generator** tab below **General** and then enable the **bot**
 
 Enable **Administrator** in the **Bot Permissions** area then scroll down a bit more until you see **Generated URL**.
 
-If you've done everything correctly, it should look similar to this:
+If you've done everything correctly it should look similar to this:
 ![image](https://user-images.githubusercontent.com/94950634/143378166-4abbbcea-f8c7-4fed-af89-6445fe517c68.png)
 
 Visit the generated URL and follow the instructions.
