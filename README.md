@@ -6,15 +6,9 @@ After you've created an application click on the **Bot** tab located to the left
 
 Copy the bots token by clicking the **Copy** button.
 
-Then, enter your Discord bot token into the token field in /data/config.json and then install the packages by using:
-```
-npm i
-```
+Then, go to /data/config.json and replace `TOKEN GOES HERE` with the token you copied and then install the packages by using `npm i`.
 
-Start the bot by using:
-```
-node index.js
-```
+Start the bot by using `node index.js`.
 
 # Adding the bot to your server
 
