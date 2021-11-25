@@ -300,7 +300,7 @@ client.on("ready", async _ => {
         } else {
             client.user.setPresence({
                 activities: [{
-                    name: `${client.guilds.cache.size} servers | Version ${config.version} | Ping: ${client.ws.ping}ms`,
+                    name: `${client.guilds.cache.size} server${client.guilds.cache.size === 1 ? "" : "s"} | Version ${config.version} | Ping: ${client.ws.ping}ms`,
                     type: "WATCHING"
                 }],
                 status: "dnd"
