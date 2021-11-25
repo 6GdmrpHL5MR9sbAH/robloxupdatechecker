@@ -33,5 +33,5 @@ Visit the generated URL and follow the instructions.
 
 # Intents
 
-Remember to enable the following intents:
+Remember to enable the following intents in the **Bot** tab:
 ![image](https://user-images.githubusercontent.com/94950634/143380178-906730e1-6dcf-4d43-8178-dffca683a1a4.png)
