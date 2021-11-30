@@ -277,7 +277,9 @@ client.on("ready", async _ => {
                     logVersion(response.clientVersionUpload, response.version.slice(2, -10))
                 }
             })
-            .catch()
+            .catch(error => {
+                // console.error(error) // Uncomment if you want to log errors.
+            })
     }, 3000)
     // deploySlashCommands()
     setInterval(async _ => {
