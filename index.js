@@ -5,6 +5,7 @@ const Discord = require("discord.js")
 const fs = require("fs")
 const wait = require("util").promisify(setTimeout)
 const fetch = require("node-fetch")
+const puppeteer = require("puppeteer")
 const config = require("./config.json")
 const client = new Discord.Client({ intents: ["GUILDS", "GUILD_MEMBERS"] })
 let rickRolling = false

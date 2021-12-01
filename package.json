@@ -5,7 +5,8 @@
   "main": "index.js",
   "dependencies": {
     "discord.js": "^13.1.0",
-    "node-fetch": "^2.6.6"
+    "node-fetch": "^2.6.6",
+    "puppeteer": "^12.0.1"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
