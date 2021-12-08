@@ -64,8 +64,7 @@ async function deploySlashCommands() {
 
 // Function for slash commands.
 async function slashCommands(command, interaction) {
-    const guildData = JSON.parse(fs.readFileSync("./data/guilds.json", "utf8"))
-    if (!guildData[interaction.guild.id]) {
+    if (!JSON.parse(fs.readFileSync("./data/guilds.json", "utf8"))[interaction.guild.id]) {
         await writeJSON("guilds", interaction.guild.id, {})
     }
     if (command === "invite") {
@@ -86,7 +85,7 @@ async function slashCommands(command, interaction) {
             await writeJSON("guilds", interaction.guild.id, interaction.options.getChannel("channel", true).id, `file[path]["updateChannel"]`)
             embed = new Discord.MessageEmbed()
                 .setColor("BLUE")
-                .setDescription(`The update channel is now <#${guildData[interaction.guild.id].updateChannel}>.`)
+                .setDescription(`The update channel is now <#${JSON.parse(fs.readFileSync("./data/guilds.json", "utf8"))[interaction.guild.id].updateChannel}>.`)
             await interaction.deferReply()
         }
         await interaction.editReply({ embeds: [embed] })
@@ -105,7 +104,7 @@ async function slashCommands(command, interaction) {
             await writeJSON("guilds", interaction.guild.id, interaction.options.getRole("role", true).id, `file[path]["updateRole"]`)
             embed = new Discord.MessageEmbed()
                 .setColor("BLUE")
-                .setDescription(`The update role is now <@&${guildData[interaction.guild.id].updateRole}>.`)
+                .setDescription(`The update role is now <@&${JSON.parse(fs.readFileSync("./data/guilds.json", "utf8"))[interaction.guild.id].updateRole}>.`)
             await interaction.deferReply()
         }
         await interaction.editReply({ embeds: [embed] })
@@ -127,7 +126,7 @@ async function slashCommands(command, interaction) {
                 .setDescription("You need the `Administrator` permission to use this command.")
             await interaction.deferReply({ ephemeral: true })
             await interaction.editReply({ embeds: [embed] })
-        } else if (!guildData[interaction.guild.id].updateRole) {
+        } else if (!JSON.parse(fs.readFileSync("./data/guilds.json", "utf8"))[interaction.guild.id].updateRole) {
             const embed = new Discord.MessageEmbed()
                 .setColor("RED")
                 .setDescription("An update role is required to use this. Use `/moderation setupdaterole`.")
@@ -136,8 +135,8 @@ async function slashCommands(command, interaction) {
         } else {
             const embed = new Discord.MessageEmbed()
                 .setColor("BLUE")
-                .setDescription(`Click "Get Role" to get <@&${guildData[interaction.guild.id].updateRole}>.
-Click "Remove Role" to remove <@&${guildData[interaction.guild.id].updateRole}>.`)
+                .setDescription(`Click "Get Role" to get <@&${JSON.parse(fs.readFileSync("./data/guilds.json", "utf8"))[interaction.guild.id].updateRole}>.
+Click "Remove Role" to remove <@&${JSON.parse(fs.readFileSync("./data/guilds.json", "utf8"))[interaction.guild.id].updateRole}>.`)
                 .setFooter("if it fails make sure the Roblox Update Checker bot is online.")
             await interaction.deferReply()
             await interaction.editReply({ embeds: [embed], components: [row] })
