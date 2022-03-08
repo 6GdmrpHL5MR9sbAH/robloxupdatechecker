@@ -1,3 +1,6 @@
+# Requirements
+• Node.JS v16.x.x
+
 # Setup
 
 Create an application [here](https://discord.com/developers/applications).
