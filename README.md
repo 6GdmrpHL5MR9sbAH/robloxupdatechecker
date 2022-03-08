@@ -1,5 +1,5 @@
 # Requirements
-• Node.JS v16.x.x
+• Node.JS v16.6.x
 
 # Setup
 
