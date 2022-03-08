@@ -5,7 +5,7 @@ const Discord = require("discord.js")
 const fs = require("fs")
 const axios = require("axios")
 const puppeteer = require("puppeteer")
-const client = new Discord.Client({ intents: ["GUILDS", "GUILD_MEMBERS"] })
+const client = new Discord.Client({ intents: ["GUILDS"] })
 
 /**
  * @param {String} jsonFileName Name of the JSON file
