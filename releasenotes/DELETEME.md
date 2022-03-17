@@ -1,0 +1,1 @@
+This is here to add the releasenotes folder to the GitHub repository.
