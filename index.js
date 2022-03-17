@@ -214,7 +214,7 @@ client.on("ready", _ => {
                 }
             })
             .catch(error => {
-                console.error(error) // Uncomment to log errors
+                // console.error(error) // Uncomment to log errors
             })
     }, 3000)
 
