@@ -432,3 +432,5 @@ Examples:
 process.on("uncaughtException", console.error)
 
 client.login(config.TOKEN)
+
+process.title = "RUC" // Sets command prompt tab title, remove if you don't need it
