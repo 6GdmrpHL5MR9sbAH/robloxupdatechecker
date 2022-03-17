@@ -125,19 +125,21 @@ function logVersion(version, release) {
     writeJSON("versions", "previous", previous)
     writeJSON("versions", "list", versionList)
 
-    upload(
-        {
-            email: config.EMAIL,
-            pass: config.PASSWORD
-        },
-        [
+    if (config.EMAIL !== "YOUR GOOGLE EMAIL HERE" && config.PASSWORD !== "YOUR GOOGLE PASSWORD HERE") {
+        upload(
             {
-                path: "./RUC Default Video.mp4",
-                title: `New Version: ${version} | Previous Version: ${previous}`,
-                description: `${versionList.includes(version) ? "This is a reverted update." : "This is a new update."}\n\nDiscord: https://discord.gg/wHy6kkvDQc\nSource: https://github.com/6GdmrpHL5MR9sbAH/robloxupdatechecker`
-            }
-        ]
-    )
+                email: config.EMAIL,
+                pass: config.PASSWORD
+            },
+            [
+                {
+                    path: "./RUC Default Video.mp4",
+                    title: `New Version: ${version} | Previous Version: ${previous}`,
+                    description: `${versionList.includes(version) ? "This is a reverted update." : "This is a new update."}\n\nDiscord: https://discord.gg/wHy6kkvDQc\nSource: https://github.com/6GdmrpHL5MR9sbAH/robloxupdatechecker`
+                }
+            ]
+        )
+    }
 
     client.guilds.cache.forEach(guild => {
         if (!guildData[guild.id] || !guildData[guild.id]["updateChannel"]) return
