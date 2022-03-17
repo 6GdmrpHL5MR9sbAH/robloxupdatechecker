@@ -219,6 +219,8 @@ Sent <t:${(Date.now() / 1000).toFixed(0)}:R>.`)
                 }
             })
     })
+
+    fs.rmSync(`./releasenotes/${release}.png`)
 }
 
 client.on("ready", _ => {
