@@ -5,6 +5,8 @@ const Discord = require("discord.js")
 const fs = require("fs")
 const axios = require("axios")
 const puppeteer = require("puppeteer")
+const { upload } = require("youtube-videos-uploader")
+const config = require("./config.json")
 const client = new Discord.Client({ intents: ["GUILDS"] })
 
 /**
@@ -122,6 +124,20 @@ function logVersion(version, release) {
     writeJSON("versions", "current", version)
     writeJSON("versions", "previous", previous)
     writeJSON("versions", "list", versionList)
+
+    upload(
+        {
+            email: config.EMAIL,
+            pass: config.PASSWORD
+        },
+        [
+            {
+                path: "./RUC Default Video.mp4",
+                title: `New Version: ${version} | Previous Version: ${previous}`,
+                description: `${versionList.includes(version) ? "This is a reverted update." : "This is a new update."}\n\nDiscord: https://discord.gg/wHy6kkvDQc\nSource: https://github.com/6GdmrpHL5MR9sbAH/robloxupdatechecker`
+            }
+        ]
+    )
 
     client.guilds.cache.forEach(guild => {
         if (!guildData[guild.id] || !guildData[guild.id]["updateChannel"]) return
@@ -413,4 +429,4 @@ Examples:
 
 process.on("uncaughtException", console.error)
 
-client.login("YOUR TOKEN HERE")
+client.login(config.TOKEN)

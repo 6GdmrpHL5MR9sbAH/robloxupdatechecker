@@ -9,7 +9,9 @@ After you've created an application click on the **Bot** tab located to the left
 
 Copy the bots token by clicking the **Copy** button.
 
-Go to the bottom of **index.js** and then replace `TOKEN GOES HERE` with the token you copied, afterwards install the packages by using `npm i`.
+Go to **config.json** and then set `TOKEN` to the token you copied, afterwards install the packages by using `npm i`.
+
+To add YouTube video support go back to **config.json** and set `EMAIL` with your YouTube email then set `PASSWORD` to your YouTube password.
 
 Start the bot by using `node index.js`.
 
