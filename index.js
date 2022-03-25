@@ -338,7 +338,7 @@ client.on("interactionCreate", async interaction => {
                     const embed = new Discord.MessageEmbed()
                         .setColor("#2F3136")
                         .addField(`@${updateRole.name}`, "Be notified of new updates.")
-                        .setFooter("If it fails make sure the bot is online.")
+                        .setFooter({ text: "If it fails make sure the bot is online." })
 
                     await interaction.deferReply()
                     await interaction.editReply({ embeds: [embed], components: [row] })
