@@ -1,6 +1,6 @@
 const { Client } = require("discord.js")
 const { get } = require("axios")
-const { logVersion } = require("../functions")
+const { logVersion, deploySlashCommands } = require("../functions")
 
 module.exports = {
     name: "ready",
@@ -9,12 +9,14 @@ module.exports = {
      * @param {Client} client
      */
     async execute(client) {
+        // deploySlashCommands(client)
+
         console.log(`${client.user.tag} is online`)
 
         setInterval(async _ => {
             const response = await get("https://clientsettings.roblox.com/v2/client-version/WindowsPlayer")
 
-            if (response.data.clientVersionUpload) logVersion(response.data.clientVersionUpload)
+            if (response.data.clientVersionUpload) logVersion(client, response.data.clientVersionUpload)
         }, 3000)
 
         setInterval(_ => {

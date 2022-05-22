@@ -21,7 +21,7 @@ module.exports = {
         return file
     },
 
-    logVersion: function (version) {
+    logVersion: function (client, version) {
         const versionData = module.exports.readJSON("versions")
         const guildData = module.exports.readJSON("guilds")
 
@@ -124,5 +124,40 @@ Source: https://github.com/6GdmrpHL5MR9sbAH/robloxupdatechecker`
         const embed = new MessageEmbed()
             .setColor("2f3136")
         return embed
+    },
+
+    deploySlashCommands: function (client) {
+        const data = [
+            {
+                name: "setupdatechannel",
+                description: "Sets the update channel to the provided channel - Requires the ADMINISTRATOR permission.",
+                options: [
+                    {
+                        name: "channel",
+                        description: "The update channel.",
+                        type: "CHANNEL",
+                        required: true
+                    }
+                ]
+            },
+            {
+                name: "setupdaterole",
+                description: "Sets the update mention role to the provided role - Requires the ADMINISTRATOR permission.",
+                options: [
+                    {
+                        name: "role",
+                        description: "The update role.",
+                        type: "ROLE",
+                        required: true
+                    }
+                ]
+            },
+            {
+                name: "createrolemenu",
+                description: "Creates a role menu for the update role - Requires the ADMINISTRATOR permission."
+            }
+        ]
+
+        client.application.commands.set(data)
     }
 }
