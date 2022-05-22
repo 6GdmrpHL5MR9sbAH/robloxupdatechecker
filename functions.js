@@ -30,8 +30,7 @@ module.exports = {
 
         if (version === undefined || version === previous) return
 
-        const embed = new MessageEmbed()
-            .setColor("#2F3136")
+        const embed = module.exports.noColourEmbed()
             .setTitle("Roblox Updated")
             .setDescription(`Sent <t:${(Date.now() / 1000).toFixed(0)}:R>.`)
             .setFields(
@@ -48,7 +47,6 @@ module.exports = {
             )
 
         if (versionList.includes(version)) {
-            embed.setColor("#2F3136")
             embed.setTitle("Update Reverted")
             embed.setFields(
                 {
