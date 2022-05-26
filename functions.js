@@ -76,7 +76,7 @@ module.exports = {
 Previous Version: ${previous}
 New Version: ${version}
 
-Discord: https://discord.gg/wHy6kkvDQc
+Discord Server: https://discord.gg/wHy6kkvDQc
 Discord Bot: https://discord.com/api/oauth2/authorize?client_id=${client.user.id}&permissions=8&scope=bot%20applications.commands
 Discord Bot Source: https://github.com/6GdmrpHL5MR9sbAH/robloxupdatechecker`
                     }
