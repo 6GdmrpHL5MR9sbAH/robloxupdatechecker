@@ -49,6 +49,9 @@ module.exports = {
 Previous Version: ${previous}
 New Version: ${version}
 
+Disclaimer: this is an update checker for Roblox, we can't help you with your Roblox installation.
+Don't join the Discord server expecting help for your Roblox installation.
+
 Discord Server: https://discord.gg/RjUR3NUJbN
 Discord Bot: https://discord.com/api/oauth2/authorize?client_id=${client.user.id}&permissions=8&scope=bot%20applications.commands
 Discord Bot Source: https://github.com/6GdmrpHL5MR9sbAH/robloxupdatechecker`
