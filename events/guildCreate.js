@@ -1,4 +1,5 @@
-const { Client, Guild, MessageActionRow, MessageButton, MessageEmbed } = require("discord.js")
+const { Client, Guild, MessageActionRow, MessageButton } = require("discord.js")
+const { successEmbed } = require("../functions")
 
 module.exports = {
     name: "guildCreate",
@@ -16,7 +17,7 @@ module.exports = {
                     .setStyle("LINK")
             )
 
-        const embed = new MessageEmbed()
+        const embed = successEmbed()
             .setColor("BLUE")
             .setDescription(`This bot uses [slash commands](https://support.discord.com/hc/en-us/articles/1500000368501-Slash-Commands-FAQ).
 

@@ -4,20 +4,17 @@ const { MessageEmbed } = require("discord.js")
 const { EMAIL, PASSWORD } = require("./config.json")
 
 module.exports = {
-    writeJSON: function (jsonFileName, path, data, codeToRun) {
-        let file = module.exports.readJSON(jsonFileName)
-
-        if (!codeToRun) codeToRun = "file[path] = data"
+    writeJSON: function (jsonFileName, path, data, codeToRun = "file[path] = data") {
+        const file = module.exports.readJSON(jsonFileName)
 
         eval(codeToRun)
 
-        let newJson = JSON.stringify(file, null, "\t")
-
-        writeFileSync(`./data/${jsonFileName}.json`, newJson)
+        writeFileSync(`./data/${jsonFileName}.json`, JSON.stringify(file, null, "\t"))
     },
 
     readJSON: function (fileName) {
         const file = JSON.parse(readFileSync(`./data/${fileName}.json`, "utf8"))
+
         return file
     },
 
@@ -28,39 +25,15 @@ module.exports = {
         const versionList = versionData.list
         const previous = versionData.current
 
-        if (version === undefined || version === previous) return
+        if (!version || version === previous) return
+
+        const reverted = versionList.includes(version)
 
         const embed = module.exports.noColourEmbed()
-            .setTitle("Roblox Updated")
+            .setTitle(reverted ? "Update Reverted" : "Roblox Updated")
             .setDescription(`Sent <t:${(Date.now() / 1000).toFixed(0)}:R>.`)
-            .setFields(
-                {
-                    name: "Previous Version",
-                    value: previous,
-                    inline: true
-                },
-                {
-                    name: "New Version",
-                    value: version,
-                    inline: true
-                }
-            )
-
-        if (versionList.includes(version)) {
-            embed.setTitle("Update Reverted")
-            embed.setFields(
-                {
-                    name: "Reverted From",
-                    value: previous,
-                    inline: true
-                },
-                {
-                    name: "Reverted To",
-                    value: version,
-                    inline: true
-                }
-            )
-        }
+            .addField(reverted ? "Reverted From" : "Previous Version", previous, true)
+            .addField(reverted ? "Reverted To" : "New Version", version, true)
 
         if (EMAIL !== "YOUR GOOGLE EMAIL HERE" && PASSWORD !== "YOUR GOOGLE PASSWORD HERE") {
             upload(
@@ -72,11 +45,11 @@ module.exports = {
                     {
                         path: "./RUC Default Video.mp4",
                         title: `New Version: ${version} | Previous Version: ${previous}`,
-                        description: `${versionList.includes(version) ? "This is a reverted update." : "This is a new update."}
+                        description: `${reverted ? "This is a reverted update." : "This is a new update."}
 Previous Version: ${previous}
 New Version: ${version}
 
-Discord Server: https://discord.gg/wHy6kkvDQc
+Discord Server: https://discord.gg/RjUR3NUJbN
 Discord Bot: https://discord.com/api/oauth2/authorize?client_id=${client.user.id}&permissions=8&scope=bot%20applications.commands
 Discord Bot Source: https://github.com/6GdmrpHL5MR9sbAH/robloxupdatechecker`
                     }
@@ -128,7 +101,7 @@ Discord Bot Source: https://github.com/6GdmrpHL5MR9sbAH/robloxupdatechecker`
     },
 
     deploySlashCommands: function (client) {
-        const data = [
+        client.application.commands.set([
             {
                 name: "setupdatechannel",
                 description: "Sets the update channel to the provided channel - Requires the ADMINISTRATOR permission.",
@@ -157,8 +130,6 @@ Discord Bot Source: https://github.com/6GdmrpHL5MR9sbAH/robloxupdatechecker`
                 name: "createrolemenu",
                 description: "Creates a role menu for the update role - Requires the ADMINISTRATOR permission."
             }
-        ]
-
-        client.application.commands.set(data)
+        ])
     }
 }
